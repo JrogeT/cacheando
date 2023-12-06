@@ -1,13 +1,42 @@
 <div class="container">
-  <div class="row">
-    <div class="col">
-      Tu Nombre:<input type="text" class="form-control" [(ngModel)]="username">
-    </div>
-    <div class="col">
-      Codigo de partida:<input type="text" class="form-control" [(ngModel)]="room">
-    </div>
-    <div class="col">
-      <button class="btn btn-success mt-3" (click)="login()">Entrar</button>
+  <div class="row mt-5">
+    <div class="col-11 col-sm-6 col-lg-6 mx-auto">
+      <form>
+        <div class="mb-5">
+          <label class="form-label">Tu Nombre</label>
+          <input type="text" name="username" class="form-control border-secondary" [(ngModel)]="username">
+        </div>
+<!--        <hr class="border border-secondary opacity-100 my-5" />-->
+        <div class="col-11 col-md-9 col-lg-6  mx-auto mb-1 mt-5">
+          <label class="form-label">Codigo de partida:</label>
+          <input type="text" name="room" class="form-control border-secondary" [(ngModel)]="roomId">
+        </div>
+        <div class="row">
+          <div class="col-11 col-md-9 col-lg-6 mx-auto d-grid">
+            <button *ngIf="!loading; else loadingGoToRoom" type="submit" class="btn btn-success" (click)="goToRoom()">Unirse a la partida</button>
+            <ng-template #loadingGoToRoom>
+              <button class="btn btn-success" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Loading...
+              </button>
+            </ng-template>
+          </div>
+        </div>
+        <hr class="border border-secondary opacity-100" />
+        <div class="row">
+          <div class="col-9 col-lg-6 mx-auto d-grid">
+            <button *ngIf="!loading; else loadingCreate" type="submit" class="btn btn-outline-dark" (click)="createRoom()">
+              Crear partida
+            </button>
+            <ng-template #loadingCreate>
+              <button class="btn btn-dark" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Loading...
+              </button>
+            </ng-template>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>

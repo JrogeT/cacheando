@@ -1,14 +1,10 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {ActivatedRoute, Router} from "@angular/router";
-import {FormsModule} from "@angular/forms";
-import {HttpClient, HttpClientModule} from "@angular/common/http";
-import {PusherService} from "../pusher.service";
+import {PusherService} from "../services/pusher.service";
+import {RoomService} from "../services/room/room.service";
 
 @Component({
   selector: 'app-room',
-  standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './room.component.html',
   styleUrl: './room.component.sass'
 })
@@ -17,29 +13,33 @@ export class RoomComponent {
   public roomId: string | null = '';
   public username: string;
   public message: string;
+  public loading = false;
 
   constructor(
-    private http: HttpClient,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private pusherService: PusherService
+    private pusherService: PusherService,
+    private roomService: RoomService
   ) {
     this.username = localStorage.getItem('username')!;
     this.message = '';
   }
 
   public ngOnInit(): void {
-
-    this.roomId = this.activatedRoute.snapshot.paramMap.get('id');
-
-    if(!this.roomId){
-      this.router.navigate(['/room-not-found']);
-      return;
-    }
-
-    localStorage.setItem('room', this.roomId);
+    this.roomId = this.activatedRoute.snapshot.paramMap.get('id')!;
+    this.roomService.getRoom(this.roomId).subscribe(
+      (response) => {},
+      (error) => {
+        alert('La partida no existe');
+        this.router.navigate(['/login']);
+      }
+    );
     this.pusherService.subscribe();
-
+    this.pusherService.playerIdBehaviorSubject.subscribe(
+      (playerId: string) => {
+        // console.log(playerId);
+      }
+    )
   }
 
   public sendMessage(): void {
@@ -65,6 +65,16 @@ export class RoomComponent {
   }
 
   public toggleReady(): void {
-    this.pusherService.sendReady();
+    this.loading = true;
+    this.roomService.setReady(this.roomId!, this.me.id).subscribe(
+      (res: any) =>{
+        console.log('Setted ready');
+        setTimeout(
+          ()=> {
+            this.loading = false;
+          },1000
+        );
+      }
+    )
   }
 }

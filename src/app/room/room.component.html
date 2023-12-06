@@ -1,5 +1,8 @@
+<div class="spinner-border" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>
 <div class="container">
-  <div class="row">
+  <div class="row mb-5">
     <div class="col">
       Nombre: <label class="h2">{{username}}</label>
     </div>
@@ -12,14 +15,20 @@
   </div>
   <div class="row">
     <div class="col">
-      <button class="btn" [ngClass]="me.ready ? 'btn-outline-warning':'btn-success'" (click)="toggleReady()">
+      <button *ngIf="!loading; else loadingReady" class="btn" [ngClass]="me.ready ? 'btn-outline-dark':'btn-success'" (click)="toggleReady()">
         {{ !me.ready ? 'Estoy listo' : 'No estoy listo' }}
       </button>
+      <ng-template #loadingReady>
+        <button class="btn btn-outline-dark" type="button" disabled>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Loading...
+        </button>
+      </ng-template>
     </div>
   </div>
   <div class="row mt-3">
     <div class="col-3">
-      Escribr mensaje: <input type="text" class="form-control" [(ngModel)]="message">
+      Escribr mensaje: <input type="text" name="message" class="form-control" [(ngModel)]="message">
       <button class="btn btn-outline-success mt-3" (click)="sendMessage()">Enviar</button>
     </div>
     <div class="col">
