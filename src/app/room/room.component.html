@@ -1,52 +1,22 @@
-<div class="spinner-border" role="status">
-  <span class="visually-hidden">Loading...</span>
-</div>
+<!--<div class="spinner-border" role="status">-->
+<!--  <span class="visually-hidden">Loading...</span>-->
+<!--</div>-->
 <div class="container">
-  <div class="row mb-5">
+  <div class="row mb-5 py-2 border-bottom border-black border-3">
     <div class="col">
       Nombre: <label class="h2">{{username}}</label>
     </div>
-    <div class="col">
-      Partida: <label class="h3">{{roomId}}</label>
-    </div>
-    <div class="col">
-      <a class="btn btn-outline-danger" href="/login">Abandonar partida</a>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <button *ngIf="!loading; else loadingReady" class="btn" [ngClass]="me.ready ? 'btn-outline-dark':'btn-success'" (click)="toggleReady()">
-        {{ !me.ready ? 'Estoy listo' : 'No estoy listo' }}
-      </button>
-      <ng-template #loadingReady>
-        <button class="btn btn-outline-dark" type="button" disabled>
-          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-          Loading...
-        </button>
-      </ng-template>
-    </div>
-  </div>
-  <div class="row mt-3">
-    <div class="col-3">
-      Escribr mensaje: <input type="text" name="message" class="form-control" [(ngModel)]="message">
-      <button class="btn btn-outline-success mt-3" (click)="sendMessage()">Enviar</button>
-    </div>
-    <div class="col">
-      <label class="h4">Mensajes</label>
-      <div class="row" *ngFor="let message of messages">
-        {{ message }}
+    <div class="col d-flex justify-content-center">
+      <div>
+        Partida: <label class="h3">{{roomId}}</label>
       </div>
     </div>
-    <div class="col">
-      <label class="h4">Jugadores</label>
-      <div class="row" *ngFor="let player of players">
-        <label class="h6">
-          <small class="p-1 rounded-3 status-text" [ngClass]="player.info.ready ? 'bg-success text-white' : 'bg-warning'">
-            {{ player.info.ready ? 'LISTO' : 'NO LISTO' }}
-          </small>
-          --{{ player.info.username }}
-        </label>
-      </div>
+    <div class="col align-items-end">
+      <a class="btn btn-outline-danger float-end" href="/login">Abandonar partida</a>
     </div>
   </div>
+  <app-lobby *ngIf="!playing; else gameSection"></app-lobby>
+  <ng-template #gameSection>
+    <app-board></app-board>
+  </ng-template>
 </div>

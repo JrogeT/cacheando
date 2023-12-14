@@ -1,0 +1,38 @@
+<div>
+  <div class="row">
+    <div class="col">
+      <button *ngIf="!loading; else loadingReady" class="btn" [ngClass]="me.ready ? 'btn-outline-dark':'btn-success'" (click)="toggleReady()">
+        {{ !me.ready ? 'Estoy listo' : 'No estoy listo' }}
+      </button>
+      <ng-template #loadingReady>
+        <button class="btn btn-outline-dark" type="button" disabled>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Loading...
+        </button>
+      </ng-template>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-3">
+      Escribir mensaje: <input type="text" name="message" class="form-control" [(ngModel)]="message">
+      <button class="btn btn-outline-success mt-3" (click)="sendMessage()">Enviar</button>
+    </div>
+    <div class="col">
+      <label class="h4">Mensajes</label>
+      <div class="row" *ngFor="let message of messages">
+        {{ message }}
+      </div>
+    </div>
+    <div class="col">
+      <label class="h4">Jugadores</label>
+      <div class="row" *ngFor="let player of players">
+        <label class="h6">
+          <small class="p-1 rounded-3 status-text" [ngClass]="player.info.ready ? 'bg-success text-white' : 'bg-warning'">
+            {{ player.info.ready ? 'LISTO' : 'NO LISTO' }}
+          </small>
+          --{{ player.info.username }}
+        </label>
+      </div>
+    </div>
+  </div>
+</div>

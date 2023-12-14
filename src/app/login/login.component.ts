@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from "@angular/router";
-import { RoomService } from "../services/room/room.service";
+import { RoomRestService } from "../services/rest/room.rest-service";
 
 @Component({
   selector: 'app-login',
@@ -14,7 +14,7 @@ export class LoginComponent {
 
   constructor(
     private router: Router,
-    private roomService: RoomService
+    private roomService: RoomRestService
   ) {
     localStorage.clear();
   }
@@ -32,10 +32,11 @@ export class LoginComponent {
     this.loading = true;
     this.roomService.getRoom(this.roomId).subscribe(
       (response) => {
-        localStorage.setItem('room', this.roomId!);
+        localStorage.setItem('roomId', this.roomId!);
+        localStorage.setItem('channel', response.channelName);
         this.router.navigate(['/room/'+this.roomId]);
       },
-      (error) => {
+      () => {
         alert('La partida no existe');
         this.loading = false;
       }
@@ -48,7 +49,7 @@ export class LoginComponent {
     this.roomService.createRoom().subscribe(
       (response) => {
         this.roomId = response.id;
-        localStorage.setItem('room', this.roomId!);
+        localStorage.setItem('roomId', this.roomId!);
         localStorage.setItem('channel', response.channelName);
         this.router.navigate(['/room/'+this.roomId]);
       },

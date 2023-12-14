@@ -6,12 +6,16 @@ import {AppRoutingModule} from "./app.routing-module";
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {NgModule} from "@angular/core";
+import {LobbyComponent} from "./lobby/lobby.component";
+import {BoardComponent} from "./board/board.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RoomComponent
+    RoomComponent,
+    LobbyComponent,
+    BoardComponent
   ],
   imports: [
     BrowserModule,

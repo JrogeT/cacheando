@@ -11,7 +11,7 @@ export class RoomsGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if(typeof localStorage.getItem('room') === 'string') return true;
+    if(typeof localStorage.getItem('roomId') === 'string') return true;
     this.router.navigate(['login']);
     return false;
   }
