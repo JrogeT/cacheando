@@ -95,6 +95,9 @@ export class RoomRealtimeService {
     console.log('starting game: ');
     console.log(data.firstPlayer);
     // this.playing.next(true);
+    this.players.map((player: any) => player.scoreboard = {});
+    console.log(data);
+    localStorage.setItem('playerInTurnId', data.firstPlayer.id);
     this.playing = true;
   }
 

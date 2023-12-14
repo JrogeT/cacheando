@@ -1,3 +1,24 @@
-<div *ngFor="let player of players">
-  {{ player.info.username }}
+<div class="container">
+  <div class="row">
+    <div *ngFor="let player of players" class="mx-3 border border-secondary rounded-4" style="width: 10rem;">
+      <div class="row justify-content-center py-2 fw-bold">
+        {{ player.info.username }}
+      </div>
+      <div class="row">
+        <app-scoreboard [scoreboard]="player.scoreboard ?? {}"></app-scoreboard>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h1 *ngIf="itsMyTurn; else itsNotMyTurn" class="text-center">
+        Es tu turno !
+      </h1>
+      <ng-template #itsNotMyTurn>
+        <h3 class="text-center fw-light">
+          Es el turno de {{ playerInTurnUsername }}
+        </h3>
+      </ng-template>
+    </div>
+  </div>
 </div>

@@ -8,6 +8,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {NgModule} from "@angular/core";
 import {LobbyComponent} from "./lobby/lobby.component";
 import {BoardComponent} from "./board/board.component";
+import {ScoreboardComponent} from "./scoreboard/scoreboard.component";
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import {BoardComponent} from "./board/board.component";
     LoginComponent,
     RoomComponent,
     LobbyComponent,
-    BoardComponent
+    BoardComponent,
+    ScoreboardComponent,
   ],
   imports: [
     BrowserModule,

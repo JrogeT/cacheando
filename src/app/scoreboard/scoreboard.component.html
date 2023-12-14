@@ -1,0 +1,22 @@
+<div class="container-fluid" style="width: 7rem;">
+  <div class="row">
+    <div class="col">{{ scoreboard.one ?? '-' }}</div>
+    <div class="col border-start border-end border-black">{{ scoreboard.straight ?? '-' }}</div>
+    <div class="col">{{ scoreboard.four ?? '-' }}</div>
+  </div>
+  <div class="row">
+    <div class="col border-top border-bottom border-black">{{ scoreboard.two ?? '-' }}</div>
+    <div class="col border border-black">{{ scoreboard.fullHouse ?? '-' }}</div>
+    <div class="col border-top border-bottom border-black">{{ scoreboard.five ?? '-' }}</div>
+  </div>
+  <div class="row">
+    <div class="col">{{ scoreboard.three ?? '-' }}</div>
+    <div class="col border-start border-end border-black">{{ scoreboard.poker ?? '-' }}</div>
+    <div class="col">{{ scoreboard.six ?? '-' }}</div>
+  </div>
+  <div class="row">
+    <div class="col"></div>
+    <div class="col">{{ scoreboard.large ?? '-' }}</div>
+    <div class="col"></div>
+  </div>
+</div>
