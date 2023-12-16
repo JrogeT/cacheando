@@ -34,7 +34,7 @@ export class PusherService {
 
     this.pusher = new Pusher("672ce2e771fcd7bdc944",
       {
-        authEndpoint: "http://localhost:3001/pusher/auth",
+        authEndpoint: "https://d519-189-28-70-114.ngrok-free.app/pusher/auth",
         auth: {
           params: {
             username: username,
@@ -44,7 +44,6 @@ export class PusherService {
         cluster: 'us2',
         encrypted: true,
       });
-    console.log('pusherService.ctor finished');
   }
 
   public triggerEvent(eventName: string, params:any){

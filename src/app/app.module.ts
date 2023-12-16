@@ -9,6 +9,7 @@ import {NgModule} from "@angular/core";
 import {LobbyComponent} from "./lobby/lobby.component";
 import {BoardComponent} from "./board/board.component";
 import {ScoreboardComponent} from "./scoreboard/scoreboard.component";
+import {DicesComponent} from "./dices/dices.component";
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import {ScoreboardComponent} from "./scoreboard/scoreboard.component";
     LobbyComponent,
     BoardComponent,
     ScoreboardComponent,
+    DicesComponent,
   ],
   imports: [
     BrowserModule,

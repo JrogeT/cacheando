@@ -53,8 +53,7 @@ export class LoginComponent {
         localStorage.setItem('channel', response.channelName);
         this.router.navigate(['/room/'+this.roomId]);
       },
-      (error) => {
-        console.log(error);
+      () => {
         this.loading = false;
       }
     )

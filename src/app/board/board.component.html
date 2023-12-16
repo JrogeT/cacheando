@@ -10,15 +10,59 @@
     </div>
   </div>
   <div class="row">
-    <div class="col">
+    <div class="col pt-3">
       <h1 *ngIf="itsMyTurn; else itsNotMyTurn" class="text-center">
         Es tu turno !
       </h1>
       <ng-template #itsNotMyTurn>
         <h3 class="text-center fw-light">
-          Es el turno de {{ playerInTurnUsername }}
+          {{ playerInTurnUsername }} esta jugando...
         </h3>
       </ng-template>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-3"></div>
+    <div class="col-6 mx-auto my-3 py-3 border border-dark rounded-3 bg-white">
+      <app-dices [dicesValue]="dicesValue" [mixing]="mixing" (diceSelected)="onDiceSelected($event)" ></app-dices>
+    </div>
+    <div class="col-3 my-3">
+      <div *ngIf="!mixing && (actionsMade === 1 || actionsMade === 3)" >
+        <h5>
+          Te podes anotar...
+        </h5>
+        <ul class="list-group bg-secondary-subtle">
+          <li *ngFor="let result of results" class="list-group-item" (click)="selectResult(result)">
+            <input
+              class="form-check-input me-1"
+              type="radio"
+              name="listGroupRadio"
+              value=""
+              id="radio-{{ result.resultPosition }}"
+            >
+            <label class="form-check-label" for="radio-{{ result.resultPosition }}">
+              <span class="badge bg-white border border-black text-dark small rounded-pill">
+                {{ result.resultValue }}
+              </span>
+              en {{ result.resultName }}
+            </label>
+          </li>
+        </ul>
+        <div class="row p-3">
+          <button class="btn btn-lg btn-outline-success" (click)="finishTurn()">
+            Finalizar turno
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="itsMyTurn" class="row">
+    <div class="col-6 mx-auto">
+      <div class="row">
+        <button *ngIf="actionsMade < 3" class="btn btn-lg btn-outline-dark" [ngClass]="mixing ? 'disabled':''" (click)="nextTurnAction()">
+          {{ mixing ? 'Lanzando...' : actionsMade <= 1 ? 'Lanzar dados' : 'Voltear dado' }}
+        </button>
+      </div>
     </div>
   </div>
 </div>

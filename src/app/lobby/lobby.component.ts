@@ -50,7 +50,6 @@ export class LobbyComponent {
     this.loading = true;
     this.roomRestService.setReady(this.roomId!, this.me.id).subscribe(
       () =>{
-        console.log('Setted ready');
         setTimeout(
           ()=> {
             this.loading = false;
