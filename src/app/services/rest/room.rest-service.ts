@@ -24,8 +24,9 @@ export class RoomRestService {
       '/rooms/' + roomId + '/players/' +playerId + '/ready');
   }
 
-  public getPossibleResults(dicesValue: Array<number>, launchesMade: number): Observable<any> {
-    return this.restService.post('/results', {dicesValue, launchesMade});
+  public getPossibleResults(dicesValue: Array<number>, launchesMade: number, scoreboard: any): Observable<any> {
+    console.log(scoreboard);
+    return this.restService.post('/results', {dicesValue, launchesMade, scoreboard});
   }
 
   public sendResult(roomId: string, playerId: string, result: any): Observable<any> {

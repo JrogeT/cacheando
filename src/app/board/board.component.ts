@@ -36,7 +36,8 @@ export class BoardComponent implements OnInit {
   private getResults(): void {
     this.roomRestService.getPossibleResults(
       this.roomRealTimeService.dicesValue.map((dice: any) => dice.value),
-      this.roomRealTimeService.actionsMadeBS.value
+      this.roomRealTimeService.actionsMadeBS.value,
+      this.roomRealTimeService.getPlayerInTurn().scoreboard
     ).subscribe(
       (res: any) => {
         this.results = res;
