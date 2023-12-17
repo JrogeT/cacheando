@@ -25,7 +25,6 @@ export class RoomRestService {
   }
 
   public getPossibleResults(dicesValue: Array<number>, launchesMade: number, scoreboard: any): Observable<any> {
-    console.log(scoreboard);
     return this.restService.post('/results', {dicesValue, launchesMade, scoreboard});
   }
 
