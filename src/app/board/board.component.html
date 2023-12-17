@@ -37,7 +37,7 @@
   </div>
   <div class="row">
     <div *ngIf="!mixing && (actionsMade === 1 || actionsMade === 3)" class="col-lg-4"></div>
-    <div class="col-9 col-md-8 col-lg-4 mx-auto my-3 py-3">
+    <div class="col-12 col-md-8 col-lg-4 mx-auto my-3 py-3">
       <div class="row border border-dark rounded-3 bg-white">
         <app-dices [dicesValue]="dicesValue" [mixing]="mixing" (diceSelected)="onDiceSelected($event)" ></app-dices>
       </div>
@@ -47,7 +47,7 @@
         </button>
       </div>
     </div>
-    <div *ngIf="!mixing && (actionsMade === 1 || actionsMade === 3)" class="col-9 col-md-8 col-lg-4 my-3 my-md-0 mx-auto">
+    <div *ngIf="!mixing && (actionsMade === 1 || actionsMade === 3)" class="col-12 col-md-8 col-lg-4 my-3 my-md-0 mx-auto">
       <h5>Te podes anotar...</h5>
       <ul class="list-group bg-secondary-subtle border border-black">
         <li *ngFor="let result of results" class="list-group-item" (click)="selectResult(result)">
