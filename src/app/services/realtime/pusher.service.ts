@@ -34,8 +34,8 @@ export class PusherService {
 
     this.pusher = new Pusher("672ce2e771fcd7bdc944",
       {
-        // authEndpoint: "https://ce45-181-41-158-243.ngrok-free.app/pusher/auth",
-        authEndpoint: "http://localhost:3001/pusher/auth",
+        // authEndpoint: "http://localhost:3001/pusher/auth",
+        authEndpoint: "http://ec2-18-217-40-187.us-east-2.compute.amazonaws.com/pusher/auth",
         auth: {
           params: {
             username: username,
