@@ -1,3 +1,6 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/4f20fbf8-86e9-4aa6-b434-32c0496e2171/deploy-status)](https://app.netlify.com/sites/cacheando/deploys)
+
+
 # Cacheando
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.3.
