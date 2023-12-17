@@ -1,5 +1,10 @@
 <div class="container-fluid" style="width: 9rem;">
   <div class="row">
+    <h5 class="text-center fst-italic">
+      {{ scoreboard.total ?? '0' }}
+    </h5>
+  </div>
+  <div class="row">
     <div class="col">{{ scoreboard.one ?? '-' }}</div>
     <div class="col border-start border-end border-black">{{ scoreboard.straight ?? '-' }}</div>
     <div class="col">{{ scoreboard.four ?? '-' }}</div>

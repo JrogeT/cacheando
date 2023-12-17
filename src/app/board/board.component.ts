@@ -99,4 +99,12 @@ export class BoardComponent implements OnInit {
     )
   }
 
+  public get finished(): boolean {
+    return this.roomRealTimeService.finished;
+  }
+
+  public goToLobby(): void {
+    this.roomRealTimeService.prepareForGame();
+  }
+
 }

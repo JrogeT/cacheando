@@ -24,24 +24,36 @@
 </nav>
 <div class="container-fluid">
   <div class="row">
-    <div class="col pt-3">
-      <h1 *ngIf="itsMyTurn; else itsNotMyTurn" class="text-center">
+    <div class="col pt-3 mx-auto">
+      <h1 *ngIf="itsMyTurn && !finished; else itsNotMyTurn" class="text-center">
         Es tu turno !
       </h1>
       <ng-template #itsNotMyTurn>
-        <h3 class="text-center fw-light">
+        <h3 *ngIf="!finished; else gameFinished" class="text-center fw-light">
           {{ playerInTurnUsername }} esta jugando...
         </h3>
+        <ng-template #gameFinished>
+          <h1 class="text-center">
+            {{ playerInTurnUsername }} ha ganado !!!
+          </h1>
+        </ng-template>
       </ng-template>
     </div>
   </div>
   <div class="row">
     <div *ngIf="!mixing && (actionsMade === 1 || actionsMade === 3)" class="col-lg-4"></div>
     <div class="col-12 col-md-8 col-lg-4 mx-auto my-3 py-3">
-      <div class="row border border-dark rounded-3 bg-white">
+      <div *ngIf="!finished; else gameFinished" class="row border border-dark rounded-3 bg-white">
         <app-dices [dicesValue]="dicesValue" [mixing]="mixing" (diceSelected)="onDiceSelected($event)" ></app-dices>
       </div>
-      <div *ngIf="itsMyTurn" class="row mt-2">
+      <ng-template #gameFinished>
+        <div class="row">
+          <button class="btn btn-outline-dark text-center mx-auto" (click)="goToLobby()">
+            Ok
+          </button>
+        </div>
+      </ng-template>
+      <div *ngIf="itsMyTurn && !finished" class="row mt-2">
         <button *ngIf="actionsMade < 3" class="btn btn-lg btn-dark" [ngClass]="mixing ? 'disabled':''" (click)="nextTurnAction()">
           {{ mixing ? 'Lanzando...' : actionsMade <= 1 ? 'Lanzar dados' : 'Voltear dado' }}
         </button>
@@ -58,7 +70,7 @@
             value=""
             id="radio-{{ result.resultPosition }}"
           >
-          <label class="form-check-label" for="radio-{{ result.resultPosition }}">
+          <label class="form-check-label" for="radio-{{ result.resultPosition }}" style="width: 90%;">
             <span class="badge bg-white border border-black text-dark small rounded-pill">
               {{ result.resultValue }}
             </span>

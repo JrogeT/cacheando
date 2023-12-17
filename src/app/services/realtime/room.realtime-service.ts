@@ -11,9 +11,11 @@ export class RoomRealtimeService {
   private playersEventName = '';
   private imReadyEventName = '';
   private startGameEventName = '';
+  private endGameEventName = '';
   public players: any[] = [];
   // public playing: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public playing = false;
+  public finished = false;
   public playerInTurnId = '';
 
   private messagesEventName = '';
@@ -51,6 +53,7 @@ export class RoomRealtimeService {
     this.deselectDicesEventName = 'client-' + this.channelName + '-deselect-dices';
     this.turnedDiceEventName = 'client-' + this.channelName + '-turned-dice';
     this.turnFinishedEventName = 'client-' + this.channelName + '-turn-finished';
+    this.endGameEventName = 'client-' + this.channelName + '-end-game';
     this.me.username = localStorage.getItem('username')!;
 
     this.dicesValue = [];
@@ -76,6 +79,7 @@ export class RoomRealtimeService {
     this.pusherService.bind(this.deselectDicesEventName, this.onDeselectDices);
     this.pusherService.bind(this.turnedDiceEventName, this.onTurnedDice);
     this.pusherService.bind(this.turnFinishedEventName, this.onTurnFinished);
+    this.pusherService.bind(this.endGameEventName, this.onEndGame);
   }
   private onSubscriptionSucceeded = (): void =>{
     this.updatePlayers();
@@ -123,6 +127,7 @@ export class RoomRealtimeService {
     localStorage.setItem('playerInTurnId', data.firstPlayer.id);
     this.playerInTurnId = data.firstPlayer.id;
     this.playing = true;
+    this.finished = false;
 
     this.dicesValue = Array.from(
       {length: 5},
@@ -133,6 +138,15 @@ export class RoomRealtimeService {
         };
       }
     );
+  }
+
+  private onEndGame = (data: any) => {
+    this.finished = true;
+    this.playerInTurnId = data.winner.id;
+    this.players.find((player: any) => player.id === data.playerInTurn.id).scoreboard = data.playerInTurn.scoreboard;
+    this.players.forEach((player: any): void => {
+      player.info.ready = false;
+    });
   }
 
   private onThrownDice = (): void => {
@@ -271,5 +285,10 @@ export class RoomRealtimeService {
 
   public getPlayerInTurn(): any {
     return this.players.find((player: any) => player.id === this.playerInTurnId);
+  }
+
+  public prepareForGame(): void {
+    this.playing = false;
+    this.me.ready = false;
   }
 }
