@@ -10,17 +10,19 @@ import {LobbyComponent} from "./lobby/lobby.component";
 import {BoardComponent} from "./board/board.component";
 import {ScoreboardComponent} from "./scoreboard/scoreboard.component";
 import {DicesComponent} from "./dices/dices.component";
+import {NavbarComponent} from "./navbar/navbar.component";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    RoomComponent,
-    LobbyComponent,
-    BoardComponent,
-    ScoreboardComponent,
-    DicesComponent,
-  ],
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        RoomComponent,
+        LobbyComponent,
+        BoardComponent,
+        ScoreboardComponent,
+        DicesComponent,
+        NavbarComponent,
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,

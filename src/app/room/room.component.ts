@@ -1,30 +1,25 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {RoomRestService} from "../services/rest/room.rest-service";
 import {RoomRealtimeService} from "../services/realtime/room.realtime-service";
 
 @Component({
-  selector: 'app-realtime',
+  selector: 'app-room',
   templateUrl: './room.component.html',
   styleUrl: './room.component.sass'
 })
-export class RoomComponent {
-
-  public roomId: string | null = '';
-  public username: string;
+export class RoomComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private roomRealTimeService: RoomRealtimeService,
     private roomRestService: RoomRestService
-  ) {
-    this.username = localStorage.getItem('username')!;
-  }
+  ) { }
 
   public ngOnInit(): void {
-    this.roomId = this.activatedRoute.snapshot.paramMap.get('id')!;
-    this.roomRestService.getRoom(this.roomId).subscribe(
+    const roomId = this.activatedRoute.snapshot.paramMap.get('id')!;
+    this.roomRestService.getRoom(roomId).subscribe(
       () => {
         // this.roomRealTimeService.
         // this.roomRealTimeService.playing.subscribe(

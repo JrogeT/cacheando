@@ -93,6 +93,7 @@ export class BoardComponent implements OnInit {
     this.roomRealTimeService.actionsMadeBS.next(4);
     this.roomRestService.sendResult(this.roomId, this.roomRealTimeService.getMe().id, this.selectedResult).subscribe(
       () => {
+        this.selectedResult = undefined;
       }
     )
   }

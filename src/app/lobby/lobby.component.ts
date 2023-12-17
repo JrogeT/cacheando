@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {RoomRealtimeService} from "../services/realtime/room.realtime-service";
 import {RoomRestService} from "../services/rest/room.rest-service";
 
@@ -15,6 +15,8 @@ export class LobbyComponent {
 
   public roomId: string | null = '';
 
+  // @ViewChild('scrollMe') private messagesContainer: ElementRef = new ElementRef<any>(null);
+
   constructor(
     private roomRealTimeService: RoomRealtimeService,
     private roomRestService: RoomRestService
@@ -22,6 +24,20 @@ export class LobbyComponent {
     this.username = localStorage.getItem('username')!;
     this.roomId = localStorage.getItem('roomId')!;
     this.message = '';
+  }
+
+  ngOnInit() {
+    this.scrollToBottom();
+  }
+
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
+  public scrollToBottom(): void {
+    try {
+      // this.messagesContainer.nativeElement.scrollTop = this.messagesContainer.nativeElement.scrollHeight;
+    } catch(err) { }
   }
 
   public sendMessage(): void {

@@ -1,20 +1,9 @@
-<!--<div class="spinner-border" role="status">-->
-<!--  <span class="visually-hidden">Loading...</span>-->
-<!--</div>-->
-<div class="container">
-  <div class="row mb-5 py-2 border-bottom border-black border-3">
-    <div class="col">
-      Nombre: <label class="h2">{{username}}</label>
-    </div>
-    <div class="col d-flex justify-content-center">
-      Partida: <label class="h3">{{roomId}}</label>
-    </div>
-    <div class="col align-items-end">
-      <a class="btn btn-outline-danger float-end" href="/login">Abandonar partida</a>
-    </div>
+<app-navbar></app-navbar>
+<div class="container-fluid">
+  <div class="row p-0 m-0">
+    <app-lobby *ngIf="!playing; else gameSection"></app-lobby>
+    <ng-template #gameSection>
+      <app-board></app-board>
+    </ng-template>
   </div>
-  <app-lobby *ngIf="!playing; else gameSection"></app-lobby>
-  <ng-template #gameSection>
-    <app-board></app-board>
-  </ng-template>
 </div>
