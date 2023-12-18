@@ -1,5 +1,7 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/4f20fbf8-86e9-4aa6-b434-32c0496e2171/deploy-status)](https://app.netlify.com/sites/cacheando/deploys)
 
+[![Time spent](https://wakatime.com/badge/github/JrogeT/cacheando.svg)](https://app.netlify.com/sites/cacheando/deploys)
+
 
 # Cacheando
 
