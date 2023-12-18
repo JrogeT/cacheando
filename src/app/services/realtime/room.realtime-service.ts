@@ -67,7 +67,7 @@ export class RoomRealtimeService {
     this.pusherService.setChannel(this.channelName);
 
     this.pusherService.bind('pusher:subscription_succeeded',this.onSubscriptionSucceeded);
-    this.pusherService.bind('pusher:subscription_error', this.onSubcriptionError);
+    this.pusherService.bind('pusher:subscription_error', this.onSubscriptionError);
     this.pusherService.bind('pusher:member_added', this.onMemberAdded);
     this.pusherService.bind('pusher:member_removed', this.onMemberRemoved);
     this.pusherService.bind(this.messagesEventName, this.onNewMessage);
@@ -82,7 +82,7 @@ export class RoomRealtimeService {
     this.pusherService.bind(this.endGameEventName, this.onEndGame);
   }
   private onSubscriptionSucceeded = (): void =>{
-    this.updatePlayers();
+    this.resetPlayers();
     this.me.id = this.pusherService.getChannel().members.me.id;
     this.me.ready = false;
   }
@@ -91,23 +91,28 @@ export class RoomRealtimeService {
     return this.playerInTurnId === this.me.id;
   }
 
-  private onSubcriptionError = (): void =>{
+  private onSubscriptionError = (): void =>{
     console.log('subscription error');
   }
 
   private onMemberAdded = (data: any): void =>{
+    if(this.playing) return;
+
     this.messages.push(
       data.info.username + ' se ha unido.'
     );
-    this.updatePlayers();
     this.me.ready = false;
+
+    this.players.push(data);
   }
 
   private onMemberRemoved = (data: any): void => {
     this.messages.push(
       data.info.username + ' ha salido.'
     );
-    this.updatePlayers();
+
+    const playerRemovedIndex = this.players.findIndex((player: any) => player.id === data.id)
+    this.players.splice(playerRemovedIndex, 1);
   }
 
   private onNewMessage = (data: any): void =>{
@@ -184,7 +189,7 @@ export class RoomRealtimeService {
 
 
 
-  private updatePlayers(): void {
+  private resetPlayers(): void {
     this.players = [];
     this.pusherService.getChannel().members.each(
       (member: any) => {
