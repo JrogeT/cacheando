@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {PusherService} from "./pusher.service";
 import {BehaviorSubject} from "rxjs";
+import {RoomRestService} from "../rest/room.rest-service";
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,7 @@ import {BehaviorSubject} from "rxjs";
 export class RoomRealtimeService {
 
   private channelName = '';
+  private roomId = '';
   private playersEventName = '';
   private imReadyEventName = '';
   private startGameEventName = '';
@@ -40,7 +42,8 @@ export class RoomRealtimeService {
   };
 
   constructor(
-    private pusherService: PusherService
+    private pusherService: PusherService,
+    private roomRestService: RoomRestService
   ) {
     this.channelName = localStorage.getItem('channel')!;
     this.playersEventName = 'client-' + this.channelName + '-players';
@@ -59,6 +62,7 @@ export class RoomRealtimeService {
     this.dicesValue = [];
     this.mixingDices = false;
     this.hasTurnedADice = false;
+    this.roomId = localStorage.getItem('roomId')!;
 
     this.initializeChannel();
   }
@@ -82,9 +86,40 @@ export class RoomRealtimeService {
     this.pusherService.bind(this.endGameEventName, this.onEndGame);
   }
   private onSubscriptionSucceeded = (): void =>{
+    console.log('subscription succeed');
     this.resetPlayers();
     this.me.id = this.pusherService.getChannel().members.me.id;
     this.me.ready = false;
+
+    this.roomRestService.getRoom(this.roomId).subscribe(
+      (res: any) => {
+        this.playing = res.playing;
+        if(this.playing) {
+          localStorage.setItem('playerInTurnId', res.playerInTurnId);
+          this.playerInTurnId = res.playerInTurnId;
+          this.dicesValue = Array.from(
+            {length: 5},
+            () => {
+              return {
+                selected: false,
+                value: Math.floor(Math.random() * 6) + 1
+              };
+            }
+          );
+          this.players = [];
+          res.players.forEach((resPlayer: any) => {
+            this.players.push({
+              id: resPlayer.id,
+              info: {
+                username: resPlayer.username,
+                ready: resPlayer.ready
+              },
+              scoreboard: resPlayer.scoreboard
+            })
+          });
+        }
+      }
+    );
   }
 
   public isMyTurn(): boolean {
@@ -96,13 +131,9 @@ export class RoomRealtimeService {
   }
 
   private onMemberAdded = (data: any): void =>{
-    if(this.playing) return;
-
     this.messages.push(
       data.info.username + ' se ha unido.'
     );
-    this.me.ready = false;
-
     this.players.push(data);
   }
 
@@ -179,12 +210,17 @@ export class RoomRealtimeService {
 
   private onTurnFinished = (data: any): void => {
     this.dicesValue = this.dicesValue.map((dice: any) => {return {...dice, selected: false}});
-    this.players.find((player: any) => player.id === data.playerInTurn.id).scoreboard = data.playerInTurn.scoreboard;
+
+    const playerInTurn = this.players.find((player: any) => player.id === data.playerInTurn.id);
+    if(playerInTurn)
+      playerInTurn.scoreboard = data.playerInTurn.scoreboard;
+
     localStorage.setItem('playerInTurnId', data.nextPlayer.id);
     this.playerInTurnId = data.nextPlayer.id;
     this.hasTurnedADice = false;
     this.actionsMadeBS.next(0);
     this.previousTurnedDice = -1;
+    this.mixingDices = false;
   }
 
 

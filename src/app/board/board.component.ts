@@ -55,6 +55,7 @@ export class BoardComponent implements OnInit {
 
   public get playerInTurnUsername(): string {
     const playerInTurn = this.roomRealTimeService.getPlayerInTurn();
+    if(!playerInTurn) return '';
     return playerInTurn.info.username;
   }
 
