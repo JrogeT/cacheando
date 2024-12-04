@@ -35,7 +35,7 @@ export class PusherService {
     this.pusher = new Pusher("672ce2e771fcd7bdc944",
       {
         // authEndpoint: "http://localhost:3001/pusher/auth",
-        authEndpoint: "https://cacheando-7794c65f4dac.herokuapp.com/pusher/auth",
+        authEndpoint: "https://cacheando-bffc3b2f28d9.herokuapp.com/pusher/auth",
         auth: {
           params: {
             username: username,
