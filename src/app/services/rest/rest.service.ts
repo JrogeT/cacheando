@@ -8,7 +8,7 @@ import {Observable} from "rxjs";
 export class RestService {
 
   // private baseUrl: string = 'http://localhost:3001/api';
-  private baseUrl: string = 'https://cacheando-7794c65f4dac.herokuapp.com/api';
+  private baseUrl: string = 'https://cacheando-bffc3b2f28d9.herokuapp.com/api';
   constructor(
     private http: HttpClient
   ) { }
