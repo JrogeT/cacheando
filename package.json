@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "config": "ts-node ./dotenvscript.ts",
+    "start": "npm run config -- --environment=dev && ng serve",
+    "build": "npm run config -- --environment=prod && ng build",
     "start:heroku": "node dist/server",
-    "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
